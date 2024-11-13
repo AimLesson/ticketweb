@@ -184,11 +184,11 @@
                             class="max-w-lg w-1/2 object-contain">
                     </div>
                     <div class="flex justify-center mt-4 gap-4 flex-wrap">
-                        <img src="{{ asset('assets/tenant/Asset-76.png') }}" alt="Lineup Image"
+                        <img src="{{ asset('assets/tenant/Asset-90.png') }}" alt="Lineup Image"
                             class="w-72 sm:w-80 md:w-96 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset('assets/tenant/Asset-74.png') }}" alt="Lineup Image"
+                        <img src="{{ asset('assets/tenant/Asset-89.png') }}" alt="Lineup Image"
                             class="w-72 sm:w-80 md:w-96 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset('assets/tenant/Asset-75.png') }}" alt="Lineup Image"
+                        <img src="{{ asset('assets/tenant/Asset-88.png') }}" alt="Lineup Image"
                             class="w-72 sm:w-80 md:w-96 object-cover rounded-lg shadow-lg hover:scale-105 transition-transform duration-300">
                     </div>
                 </div>

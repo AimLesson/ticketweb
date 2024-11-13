@@ -34,6 +34,11 @@ class TransaksiController extends Controller
         // Send WhatsApp notification
         $this->sendWA($request->nomor_whatsapp, $message);
 
+        // Send notification to admin after storing the transaction
+        $adminPhoneNumber = '085156106221'; // Replace with the actual admin phone number
+        $adminMessage = 'Pemesanan Tiket telah dibuat dengan Nama : ' . $transaksi->nama . ', NIK : '.$transaksi->nik.',No HP : '.$transaksi->nomor_whatsapp.'. ';
+        $this->sendWA($adminPhoneNumber, $adminMessage);
+
         return back()->with('success', 'Link Pembayaran Dikirim melalui WhatsApp');
     }
 
@@ -116,32 +121,38 @@ class TransaksiController extends Controller
             'nik' => 'required|string|size:16',
             'file' => 'required|image|mimes:jpeg,png,jpg|max:2048', // Validating the uploaded file
         ]);
-
+    
         $transaksi = Transaksi::where('nama', $request->nama)
-                            ->where('nik', $request->nik)
-                            ->first();
-
+                                ->where('nik', $request->nik)
+                                ->first();
+    
         if ($transaksi) {
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
                 $fileName = time() . '_' . $file->getClientOriginalName();
                 $filePath = $file->storeAs('uploads', $fileName, 'public');
-
+    
                 $transaksi->picture = $filePath;
                 $transaksi->save();
-
+    
+                // Send notification to admin (hardcoded admin phone number)
+                $adminPhoneNumber = '085156106221'; // Replace with the actual admin phone number
+                $message = 'Bukti Pembayaran untuk NIK-'.$transaksi->nik.', diterima, segera verifikasi bukti Pembayaran di be-benz.id/dashboard';
+                $this->sendWA($adminPhoneNumber, $message);
+    
                 return response()->json([
                     'success' => true,
-                    'message' => 'File uploaded and saved successfully.',
+                    'message' => 'File uploaded and saved successfully. Admin notified.',
                 ]);
             }
         }
-
+    
         return response()->json([
             'success' => false,
             'message' => 'Failed to verify or save file.',
         ]);
     }
+    
 
     public function updateStatus(Request $request, $id)
     {
